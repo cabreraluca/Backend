@@ -55,8 +55,7 @@ class Contenedor{
     }
 }
 const contenedor = new Contenedor();
-let producto = {title:'pantalon', price: 300, id: 1}
-console.log(contenedor.save(producto))
+module.exports = Contenedor;
 
 
 

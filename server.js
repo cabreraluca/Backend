@@ -1,33 +1,23 @@
-class Usuario{
-    constructor(nombre, apellido, libros, mascotas){
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.libros = libros;
-        this.mascotas = mascotas;
-    }
-    getFullName() {
-        console.log("El nombre completo es: " + this.nombre + ' ' + this.apellido);
-    }
-    addMascotas(){
-        this.mascotas.push(mascota);
-    }
-    countMascotas(){
-        console.log(this.mascotas.length);
-    }
-    addBook(title, autor){
-        this.libros.push({title: title, autor: autor})
-    }
-    getBookNames(){
-            this.libros.forEach((libro) => {
-                titulosLibros.push(libro.title);
-            });
-            return console.log(titulosLibros);
-    }
-}
-const titulosLibros= [];
-const usuario = new Usuario('Luca', 'Cabrera',[{title: 'Flow', autor:'Mihaly Csikszentmihalyi'}], [{nombre: 'Perro'}, {nombre: 'gato'}])
-usuario.addBook('Despierte su gigante interior', 'Tony Robbins');
-console.log(usuario);
-usuario.getFullName();
-usuario.getBookNames();
-usuario.countMascotas();
+const express = require('express');
+const app = express();
+const PORT = 8080;
+const Contenedor = require('./desafio2');
+app.get('/', async (req, res) =>{
+    res.send('bienvenido, dirijase a /productos o /productorandom')
+});
+app.get('/productos', async (req, res) =>{
+    const contenedor = new Contenedor();
+    const allProducts = await contenedor.getAll();
+    res.json(allProducts);
+});
+app.get('/productorandom', async(req, res) => {
+    const contenedor = new Contenedor();
+    const allProducts = await contenedor.getAll();
+    const productoRandom = allProducts[Math.ceil(Math.random() * allProducts.length)];
+    res.json(productoRandom);
+  });
+app.listen(PORT, () =>{
+    console.log(`Servidor http escuchando el puerto localhost:${PORT}`)
+});
+const contenedor = new Contenedor();
+
