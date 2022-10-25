@@ -17,8 +17,7 @@ class Contenedor{
         try{
             let productos = await this.getAll();
             let id = productos.length === 0? 1 : productos[productos.length - 1].id + 1;
-            producto.id = id;
-            productos = [...productos, producto];
+            productos = [...productos,{id, ...producto}];
             console.log('producto guardado'); 
             await fs.promises.writeFile(this.file, JSON.stringify(productos, null));
         }
