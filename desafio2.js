@@ -25,15 +25,38 @@ class Contenedor{
             console.log(e)
         }
     }
-    getById = async (id) =>{
+    getById =(id) =>{
+        try{
+            let productos = fs.readFileSync(this.file, 'utf-8');
+            const result = JSON.parse(productos)
+            const productoFiltrado = result.find(data => data.id === id);
+            if(productoFiltrado == undefined){
+                return 'el producto no se encuentra';
+            }else{
+                return productoFiltrado;
+            }
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
+    updateById = async (id, titulo, precio, thumbnail) =>{
         try{
             let productos = await this.getAll();
-            const productoFiltrado = productos.find((data) => data.id === id);
-            if(productoFiltrado == undefined || productoFiltrado.id !== id){
-                console.log('No existe el producto');
-            }else{
-                console.log(productoFiltrado);
+            const productExists = productos.find((data) => data.id === id);
+            const indice = productos.findIndex((data)=> data.id === id);
+            if(productExists != undefined){
+                const productoNuevo = {id: id, titulo: titulo, precio: precio, thumbnail: thumbnail};
+                productos[indice] = productoNuevo;
+                fs.writeFileSync(
+                    this.file, 
+                    JSON.stringify(productos, null, 1)
+                );
+                return true;
             }
+            else{
+                return false;
+            } 
         }
         catch(e){
             console.log(e)
