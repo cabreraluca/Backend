@@ -43,8 +43,8 @@ class Contenedor{
     updateById = async (id, titulo, precio, thumbnail) =>{
         try{
             let productos = await this.getAll();
-            const productExists = productos.find((data) => data.id === id);
-            const indice = productos.findIndex((data)=> data.id === id);
+            const productExists = productos.find((data) => Number(data.id) === Number(id));
+            const indice = productos.findIndex((data)=> Number(data.id) === Number(id));
             if(productExists != undefined){
                 const productoNuevo = {id: id, titulo: titulo, precio: precio, thumbnail: thumbnail};
                 productos[indice] = productoNuevo;

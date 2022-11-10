@@ -5,6 +5,8 @@ const PORT = 8080;
 const Contenedor = require('./desafio2');
 const routerProducts = Router();
 const bodyParser = require("body-parser");
+app.set('views', './views');
+app.set()
 app.use('/public', express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended:false}));
 app.use(bodyParser.json());
